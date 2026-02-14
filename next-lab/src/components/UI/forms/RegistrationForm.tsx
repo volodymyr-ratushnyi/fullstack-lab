@@ -1,5 +1,7 @@
 "use client";
 
+import {registerUser} from "@/actions/userActions";
+import {IRegisterFormData} from "@/types/formData";
 import {Button, Form, Input} from "@heroui/react";
 import React, {useState} from "react";
 
@@ -8,7 +10,7 @@ interface IProps {
 }
 
 const RegistrationForm = ({ onClose }: IProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IRegisterFormData>({
     email: '',
     password: '',
     confirmPassword: '',
@@ -21,7 +23,7 @@ const RegistrationForm = ({ onClose }: IProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Registration form submitted", formData)
+    await registerUser(formData);
     onClose();
   }
 
@@ -38,7 +40,7 @@ const RegistrationForm = ({ onClose }: IProps) => {
         input: "text-sm focus:outline-none "
       }}
       onChange={({target}) => setFormData((data) => ({...data, email: target.value}))}
-      validate={(value) => !value ? "Email is required" : !validateEmail(value) ? "Invalid email" : null}
+      validate={(value) => validateEmail(value) ? null : "Invalid email"}
     />
     <Input
       aria-label={"Password"}
@@ -52,7 +54,7 @@ const RegistrationForm = ({ onClose }: IProps) => {
         input: "text-sm focus:outline-none "
       }}
       onChange={({target}) => setFormData((data) => ({...data, password: target.value}))}
-      validate={(value) => !value ? "Password is required" : value.length < 6 ? "Password is too short, need 6 symbols" : null}
+      validate={(value) => value.length < 6 ? "Password is too short, need 6 symbols" : null}
     />
     <Input
       aria-label={"Confirm password"}
@@ -66,7 +68,7 @@ const RegistrationForm = ({ onClose }: IProps) => {
         input: "text-sm focus:outline-none "
       }}
       onChange={({target}) => setFormData((data) => ({...data, confirmPassword: target.value}))}
-      validate={(value) => !value ? "Confirm password is required" : formData.password !== value ? "Password dosen't match" : null}
+      validate={(value) => formData.password !== value ? "Password dosen't match" : null}
     />
     <div className={"flex w-full gap-4 items-center pt-4 justify-end"}>
       <Button variant={"light"} onPress={onClose}>

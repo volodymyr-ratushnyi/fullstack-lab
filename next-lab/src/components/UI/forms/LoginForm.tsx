@@ -1,5 +1,7 @@
 "use client";
 
+import {signInWithCredentials} from "@/actions/userActions";
+import {ILoginFormData} from "@/types/formData";
 import {Button, Form, Input} from "@heroui/react";
 import {FormEvent, useState} from "react";
 
@@ -8,10 +10,9 @@ interface IProps {
 }
 
 const LoginForm = ({ onClose }: IProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ILoginFormData>({
     email: '',
     password: '',
-    confirmPassword: '',
   });
 
   const validateEmail = (email: string) => {
@@ -21,7 +22,7 @@ const LoginForm = ({ onClose }: IProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Login form submitted", formData)
+    await signInWithCredentials(formData)
     onClose();
   }
 

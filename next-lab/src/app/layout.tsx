@@ -1,9 +1,11 @@
 import {metaData} from "@/constants/constants";
+import ServerProviders from "@providers/ServerProviders";
 import Header from "@UI/Header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Providers from "@providers/Providers"
+import ClientProviders from "@providers/ClientProviders"
 import "./globals.css";
+import {ReactNode} from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,28 +22,30 @@ export const metadata: Metadata = metaData;
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <Providers>
-        <Header/>
-        <main
-          className={"flex flex-col justify-start items-center w-full"}
-          style={{height: `calc(100vh - ${metaData.headerHeight} - ${metaData.footerHeight})`}}
-        >
-          {children}
-        </main>
-        <footer
-          className={"flex justify-center items-center"}
-          style={{height: metaData.footerHeight}}
-        >
-          <p>{metaData.description}</p>
-        </footer>
-      </Providers>
+      <ServerProviders>
+        <ClientProviders>
+          <Header/>
+          <main
+            className={"flex flex-col justify-start items-center w-full"}
+            style={{height: `calc(100vh - ${metaData.headerHeight} - ${metaData.footerHeight})`}}
+          >
+            {children}
+          </main>
+          <footer
+            className={"flex justify-center items-center"}
+            style={{height: metaData.footerHeight}}
+          >
+            <p>{metaData.description}</p>
+          </footer>
+        </ClientProviders>
+      </ServerProviders>
       </body>
     </html>
   );

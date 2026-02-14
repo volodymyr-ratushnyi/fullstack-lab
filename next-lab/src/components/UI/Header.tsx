@@ -1,9 +1,11 @@
 "use client"
 
+import {signOutFunc} from "@/actions/userActions";
 import {metaData} from "@/constants/constants";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button} from "@heroui/react";
 import LoginModal from "@UI/modals/LoginModal";
 import RegistrationModal from "@UI/modals/RegistrationModal";
+import {useSession} from "next-auth/react";
 import Image from "next/image";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
@@ -12,6 +14,8 @@ import Link from "next/link";
 
 export default function Header() {
   const pathName = usePathname();
+  const {status} = useSession();
+  const isAuthed = status === "authenticated";
 
   const navItems = [
     {href: '/', label: 'Home'},
@@ -47,9 +51,13 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button color="primary" variant="flat" onPress={() => setIsLoginOpen(true)}>
-            Login
-          </Button>
+          {isAuthed
+            ? <Button color="primary" variant="flat" onPress={() => setIsLoginOpen(true)}>
+              Sign in
+            </Button>
+            : <Button color="primary" variant="flat" onPress={async () => await signOutFunc()}>
+              Sign out
+            </Button>}
         </NavbarItem>
         <NavbarItem>
           <Button color="primary" variant="flat" onPress={() => setIsRegistrationOpen(true)}>
