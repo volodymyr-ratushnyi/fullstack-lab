@@ -1,4 +1,4 @@
-import CustomModal from "@components/common/Modal";
+import CustomModal from "@/components/common/Modal";
 import LoginForm from "@UI/forms/LoginForm";
 import React from 'react';
 

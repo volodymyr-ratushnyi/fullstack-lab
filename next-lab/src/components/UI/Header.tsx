@@ -1,11 +1,12 @@
 "use client"
 
-import {signOutFunc} from "@/actions/userActions";
-import {metaData} from "@/constants/constants";
+import {setAuthState} from "@/actions/user/authSlice";
+import {signOutFunc} from "@/actions/user/userActions";
+import {AuthStatuses, metaData} from "@/constants/constants";
+import {useAppDispatch, useAppSelector} from "@/hooks/hooks";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button} from "@heroui/react";
 import LoginModal from "@UI/modals/LoginModal";
 import RegistrationModal from "@UI/modals/RegistrationModal";
-import {useSession} from "next-auth/react";
 import Image from "next/image";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
@@ -13,9 +14,10 @@ import wolf from "../../../public/cool_wolf_sunglasses.svg";
 import Link from "next/link";
 
 export default function Header() {
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const loading = useAppSelector((state) => state.auth.loading);
+  const dispatch = useAppDispatch();
   const pathName = usePathname();
-  const {status} = useSession();
-  const isAuthed = status === "authenticated";
 
   const navItems = [
     {href: '/', label: 'Home'},
@@ -25,6 +27,14 @@ export default function Header() {
 
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const signOut = async () => {
+    await signOutFunc();
+    dispatch(setAuthState({
+      status: AuthStatuses.UNAUTHENTICATED,
+      user: null,
+    }));
+  }
 
   return (
     <Navbar style={{height: metaData.headerHeight}}>
@@ -50,15 +60,17 @@ export default function Header() {
         </NavbarItem>)}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          {isAuthed
-            ? <Button color="primary" variant="flat" onPress={() => setIsLoginOpen(true)}>
-              Sign in
-            </Button>
-            : <Button color="primary" variant="flat" onPress={async () => await signOutFunc()}>
-              Sign out
-            </Button>}
-        </NavbarItem>
+        {loading
+          ? <>...Loading</>
+          :<NavbarItem>
+            {isAuth
+              ? <Button color="primary" variant="flat" onPress={signOut}>
+                Sign out
+              </Button>
+              : <Button color="primary" variant="flat" onPress={() => setIsLoginOpen(true)}>
+                Sign in
+              </Button>}
+          </NavbarItem>}
         <NavbarItem>
           <Button color="primary" variant="flat" onPress={() => setIsRegistrationOpen(true)}>
             Sign Up

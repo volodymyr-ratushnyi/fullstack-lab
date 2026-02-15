@@ -1,6 +1,6 @@
 "use client";
 
-import {registerUser} from "@/actions/userActions";
+import {registerUser} from "@/actions/user/userActions";
 import {IRegisterFormData} from "@/types/formData";
 import {Button, Form, Input} from "@heroui/react";
 import React, {useState} from "react";

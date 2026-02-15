@@ -9,12 +9,12 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 })
 
-const db = globalForPrisma.prisma || new PrismaClient({
+const prisma = globalForPrisma.prisma || new PrismaClient({
   adapter,
 })
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
-export const getUserFromDb = async (email: string) => await db.user.findFirst({where: {email}});
+export const getUserFromDb = async (email: string) => await prisma.user.findFirst({where: {email}});
 
-export default db
+export default prisma

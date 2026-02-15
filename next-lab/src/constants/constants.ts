@@ -8,3 +8,9 @@ export const metaData = {
   footerHeight: "80px",
 
 } as const;
+
+export enum AuthStatuses {
+  LOADING = "loading",
+  AUTHENTICATED = "authenticated",
+  UNAUTHENTICATED = "unauthenticated",
+}

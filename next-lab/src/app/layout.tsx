@@ -1,9 +1,10 @@
 import {metaData} from "@/constants/constants";
-import ServerProviders from "@providers/ServerProviders";
+import AppLoader from "@/hoc/AppLoader";
+import ServerProviders from "@/providers/ServerProviders";
 import Header from "@UI/Header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import ClientProviders from "@providers/ClientProviders"
+import ClientProviders from "@/providers/ClientProviders"
 import "./globals.css";
 import {ReactNode} from "react";
 
@@ -31,19 +32,21 @@ export default function RootLayout({
     >
       <ServerProviders>
         <ClientProviders>
-          <Header/>
-          <main
-            className={"flex flex-col justify-start items-center w-full"}
-            style={{height: `calc(100vh - ${metaData.headerHeight} - ${metaData.footerHeight})`}}
-          >
-            {children}
-          </main>
-          <footer
-            className={"flex justify-center items-center"}
-            style={{height: metaData.footerHeight}}
-          >
-            <p>{metaData.description}</p>
-          </footer>
+          <AppLoader>
+            <Header/>
+            <main
+              className={"flex flex-col justify-start items-center w-full"}
+              style={{height: `calc(100vh - ${metaData.headerHeight} - ${metaData.footerHeight})`}}
+            >
+              {children}
+            </main>
+            <footer
+              className={"flex justify-center items-center"}
+              style={{height: metaData.footerHeight}}
+            >
+              <p>{metaData.description}</p>
+            </footer>
+          </AppLoader>
         </ClientProviders>
       </ServerProviders>
       </body>

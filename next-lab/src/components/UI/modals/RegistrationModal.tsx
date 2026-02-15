@@ -1,4 +1,4 @@
-import CustomModal from "@components/common/Modal";
+import CustomModal from "@/components/common/Modal";
 import RegistrationForm from "@UI/forms/RegistrationForm";
 import React from 'react';
 
