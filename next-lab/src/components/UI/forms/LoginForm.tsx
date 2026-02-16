@@ -1,7 +1,7 @@
 "use client";
 
-import {signInWithCredentials} from "@/actions/user/userActions";
-import {ILoginFormData} from "@/types/formData";
+import {signInWithCredentials} from "@/auth/auth-actions";
+import {ILoginFormData} from "@/types/form-data.types";
 import {Button, Form, Input} from "@heroui/react";
 import {useSession} from "next-auth/react";
 import {FormEvent, useState} from "react";

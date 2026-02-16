@@ -1,1 +1,1 @@
-export { auth as proxy } from "@/utils/auth";
+export { auth as proxy } from "@/auth/auth";

@@ -1,4 +1,4 @@
-import {auth} from "@/utils/auth";
+import {auth} from "@/auth/auth";
 import {SessionProvider} from "next-auth/react";
 import React from "react";
 

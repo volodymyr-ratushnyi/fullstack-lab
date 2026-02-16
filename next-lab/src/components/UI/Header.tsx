@@ -1,29 +1,28 @@
 "use client"
 
-import {setAuthState} from "@/actions/user/authSlice";
-import {signOutFunc} from "@/actions/user/userActions";
-import {AuthStatuses, metaData} from "@/constants/constants";
+import {signOutFunc} from "@/auth/auth-actions";
+import {sizes} from "@/config/layouts.config";
+import {PagesLinkConfig} from "@/config/pages-url.config";
+import {metaData} from "@/config/seo.config";
+import {AuthStatuses} from "@/constants/constants";
 import {useAppDispatch, useAppSelector} from "@/hooks/hooks";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Button} from "@heroui/react";
+import {setAuthState} from "@/store/authSlice";
+import {Button, Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@heroui/react";
 import LoginModal from "@UI/modals/LoginModal";
 import RegistrationModal from "@UI/modals/RegistrationModal";
 import Image from "next/image";
+import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 import wolf from "../../../public/cool_wolf_sunglasses.svg";
-import Link from "next/link";
 
 export default function Header() {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const loading = useAppSelector((state) => state.auth.loading);
+  const email = useAppSelector((state) => state.auth.user?.email);
   const dispatch = useAppDispatch();
-  const pathName = usePathname();
 
-  const navItems = [
-    {href: '/', label: 'Home'},
-    {href: '/main', label: 'Main'},
-    {href: '/about', label: 'About'},
-  ];
+  const pathName = usePathname();
 
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -37,15 +36,15 @@ export default function Header() {
   }
 
   return (
-    <Navbar style={{height: metaData.headerHeight}}>
+    <Navbar style={{height: sizes.headerHeight}}>
       <NavbarBrand>
-        <Link href={"/"} className={"flex items-center gap-1"}>
+        <Link href={PagesLinkConfig.HOME} className={"flex items-center gap-1"}>
           <Image src={wolf} alt={"Logo wolf"} width={46}/>
           <p className="font-bold text-inherit h-fit">{metaData.title}</p>
         </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {navItems.map(({href, label}) => <NavbarItem key={href}>
+        {PagesLinkConfig.getNavLinks().map(({href, label}) => <NavbarItem key={href}>
           <Link
             href={href}
             scroll={false}
@@ -64,9 +63,12 @@ export default function Header() {
           ? <>...Loading</>
           :<NavbarItem>
             {isAuth
-              ? <Button color="primary" variant="flat" onPress={signOut}>
-                Sign out
-              </Button>
+              ? <>
+                {email}
+                <Button color="primary" variant="flat" onPress={signOut}>
+                  Sign out
+                </Button>
+              </>
               : <Button color="primary" variant="flat" onPress={() => setIsLoginOpen(true)}>
                 Sign in
               </Button>}

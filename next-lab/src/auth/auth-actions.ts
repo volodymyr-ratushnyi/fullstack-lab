@@ -1,8 +1,8 @@
 "use server";
 
-import {ILoginFormData, IRegisterFormData} from "@/types/formData";
-import {saltAndHashPassword, signIn, signOut} from "@/utils/auth";
-import prisma from "@/utils/db";
+import {ILoginFormData, IRegisterFormData} from "@/types/form-data.types";
+import {saltAndHashPassword, signIn, signOut} from "@/auth/auth";
+import prisma from "@/db/db";
 
 export const registerUser = async ({email, password}: IRegisterFormData) => {
   try {

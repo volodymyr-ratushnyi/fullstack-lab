@@ -1,10 +1,10 @@
 import bcryptjs from "bcryptjs";
-import prisma, { getUserFromDb } from "@/utils/db";
+import prisma, { getUserFromDb } from "@/db/db";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import {User} from "@prisma/client";
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { signInSchema } from "@/schemas/zod"
+import { signInSchema } from "@/auth/auth-validation"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
