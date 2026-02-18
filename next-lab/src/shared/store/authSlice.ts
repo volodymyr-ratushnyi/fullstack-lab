@@ -1,7 +1,7 @@
-import {AuthStatuses} from "@/shared/constants/constants";
+import {AuthStatuses} from "@/shared/constants/constants"
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import type { Session } from "next-auth";
-import {useSession} from "next-auth/react";
+import type { Session } from "next-auth"
+import {useSession} from "next-auth/react"
 
 type SessionStatus = ReturnType<typeof useSession>["status"];
 
@@ -26,14 +26,14 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthState: (state, {payload}: Payload) => {
-      state.isAuth = payload.status === AuthStatuses.AUTHENTICATED;
-      state.loading = payload.status === AuthStatuses.LOADING;
-      state.status = payload.status;
-      state.user = payload.user;
+      state.isAuth = payload.status === AuthStatuses.AUTHENTICATED
+      state.loading = payload.status === AuthStatuses.LOADING
+      state.status = payload.status
+      state.user = payload.user
     },
   }
 })
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState } = authSlice.actions
 
-export default authSlice.reducer;
+export default authSlice.reducer

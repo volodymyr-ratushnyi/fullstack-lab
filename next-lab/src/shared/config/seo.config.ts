@@ -4,4 +4,4 @@ export const metaData = {
   icons: {
     icon: '/cool_wolf_sunglasses.svg',
   },
-};
+}
