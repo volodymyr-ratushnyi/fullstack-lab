@@ -1,4 +1,4 @@
-import {Link} from "@/types/config.types";
+import {Link} from "@/shared/types/config.types";
 
 export class PagesLinkConfig {
   private static readonly root: string = '/';

@@ -1,12 +1,10 @@
-import { sizes } from "@/config/layouts.config";
-import { metaData } from "@/config/seo.config";
-import AppLoader from "@/hoc/AppLoader";
-import ServerProviders from "@/providers/ServerProviders";
-import Header from "@UI/Header";
+import {ClientProviders} from "@/app/api/(providers)/client-providers";
+import { sizes } from "@/shared/config/layouts.config";
+import { metaData } from "@/shared/config/seo.config";
+import Header from "@/widgets/Header/ui/Header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import ClientProviders from "@/providers/ClientProviders"
-import "./globals.css";
+import "./globals.scss";
 import { ReactNode } from "react";
 
 const geistSans = Geist({
@@ -28,28 +26,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-      <ServerProviders>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ClientProviders>
-          <AppLoader>
-            <Header/>
-            <main
-              className={"flex flex-col justify-start items-center w-full"}
-              style={{height: `calc(100vh - ${sizes.headerHeight} - ${sizes.footerHeight})`}}
-            >
-              {children}
-            </main>
-            <footer
-              className={"flex justify-center items-center"}
-              style={{height: sizes.footerHeight}}
-            >
-              <p>{metaData.description}</p>
-            </footer>
-          </AppLoader>
+          <Header/>
+          <main>
+            {children}
+          </main>
+          <footer
+            className={"flex justify-center items-center"}
+            style={{height: sizes.footerHeight}}
+          >
+            <p>{metaData.description}</p>
+          </footer>
         </ClientProviders>
-      </ServerProviders>
       </body>
     </html>
   );

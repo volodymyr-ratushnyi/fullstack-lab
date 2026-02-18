@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "eol-last": ["error", "always"],
+      "semi": ["error", "never"],
     },
   },
 ]);

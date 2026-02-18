@@ -1,19 +1,9 @@
-"use client";
-
-import {Button} from "@heroui/react";
+import {PagesLinkConfig} from "@/shared/config/pages-url.config";
 import Link from "next/link";
 
 const NotFoundPage = () => {
     return (
-      <div className={"flex flex-col items-center justify-center"}>
-        <div className={"text-8x1 font-bold text-gray-300"}>404</div>
-        <h1 className={"text-3x1 font-bold tracking-tight"}>Not found page</h1>
-        <div className={"pt-6"}>
-          <Button as={Link} color={"primary"} variant={"shadow"} href={"/"}>
-            Go to home
-          </Button>
-        </div>
-      </div>
+      <Link href={PagesLinkConfig.HOME}>Go Home</Link>
     )
 };
 

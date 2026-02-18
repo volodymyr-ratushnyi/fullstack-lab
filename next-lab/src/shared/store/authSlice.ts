@@ -1,4 +1,4 @@
-import {AuthStatuses} from "@/constants/constants";
+import {AuthStatuses} from "@/shared/constants/constants";
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import type { Session } from "next-auth";
 import {useSession} from "next-auth/react";
