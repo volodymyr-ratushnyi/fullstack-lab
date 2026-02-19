@@ -1,0 +1,24 @@
+.logo {
+  display: flex;
+  align-items: center;
+  transition: 0.5s;
+
+  h1 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+
+  svg {
+    transition: filter 0.5s;
+  }
+
+  &:hover {
+    color: purple;
+    text-shadow: deeppink 0 0 2px;
+
+    svg {
+      fill: purple;
+      filter: drop-shadow( 0 0 2px deeppink);
+    }
+  }
+}

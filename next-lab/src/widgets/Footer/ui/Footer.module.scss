@@ -1,9 +1,8 @@
 @use '@/shared/styles/variables' as v;
 @use '@/shared/styles/mixins' as m;
 
-.header {
-  @include m.d-flex(space-around, center);
-  height: 60px;
+.footer {
+  @include m.d-flex(center, center);
+  height: 40px;
   background-color: v.$widgets-color;
-  box-shadow: 0 0 10px gray;
 }

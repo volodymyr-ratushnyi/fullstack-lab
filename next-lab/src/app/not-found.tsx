@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const NotFoundPage = () => {
     return (
-      <Link href={PagesLinkConfig.HOME}>Go Home</Link>
+      <Link href={PagesLinkConfig.HOME.href}>Go Home</Link>
     )
 }
 
