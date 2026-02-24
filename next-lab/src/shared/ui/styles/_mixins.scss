@@ -1,6 +1,7 @@
-@mixin d-flex($justify: start, $align: stretch, $wrap: nowrap) {
+@mixin d-flex($justify: start, $align: stretch, $wrap: nowrap, $gap: 0) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
   flex-wrap: $wrap;
+  gap: $gap;
 }

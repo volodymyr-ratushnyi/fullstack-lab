@@ -4,7 +4,7 @@ import {headers} from "next/headers"
 import Link from "next/link"
 import style from "./NavMenu.module.scss"
 
-const NavMenu = async  () => {
+const NavMenu = async () => {
   const headersList = await headers()
   const pathName = headersList.get("referer") || "/"
   return <ul className={style.navMenu}>

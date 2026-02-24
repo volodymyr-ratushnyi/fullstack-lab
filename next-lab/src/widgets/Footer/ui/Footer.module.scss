@@ -1,5 +1,5 @@
-@use '@/shared/styles/variables' as v;
-@use '@/shared/styles/mixins' as m;
+@use '@/shared/ui/styles/variables' as v;
+@use '@/shared/ui/styles/mixins' as m;
 
 .footer {
   @include m.d-flex(center, center);

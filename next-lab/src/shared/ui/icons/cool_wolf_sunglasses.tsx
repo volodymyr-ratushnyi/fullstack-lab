@@ -1,6 +1,6 @@
 import {SVGProps} from "react"
 
-const IconWolf = ({width = "46px", height = "46px", viewBox = "0 0 512 512", ...props}: SVGProps<SVGSVGElement>) => {
+export const IconWolf = ({width = "46px", height = "46px", viewBox = "0 0 512 512", ...props}: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       version={"1.0"}
@@ -14,5 +14,3 @@ const IconWolf = ({width = "46px", height = "46px", viewBox = "0 0 512 512", ...
     </svg>
   )
 }
-
-export default IconWolf

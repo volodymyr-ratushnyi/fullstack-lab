@@ -1,0 +1,17 @@
+@use '@/shared/ui/styles/mixins' as m;
+
+.avatar {
+  border-radius: 50%;
+}
+
+.emptyAvatar {
+  @include m.d-flex(center, center);
+  width: 46px;
+  height: 46px;
+  background: gray;
+  border-radius: 50%;
+
+  svg {
+    margin-top: 3px;
+  }
+}

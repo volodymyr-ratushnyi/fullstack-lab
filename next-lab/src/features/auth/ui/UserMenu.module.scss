@@ -1,0 +1,5 @@
+@use "@/shared/ui/styles/mixins" as m;
+
+.userMenu {
+  @include m.d-flex(start, center, nowrap, 15px)
+}

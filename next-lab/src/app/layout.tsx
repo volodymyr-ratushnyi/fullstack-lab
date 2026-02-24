@@ -1,7 +1,6 @@
-import {ClientProviders} from "@/app/(providers)/client-providers"
 import { metaData } from "@/shared/config/seo.config"
-import Footer from "@/widgets/Footer/ui/Footer"
-import Header from "@/widgets/Header/ui/Header"
+import {Footer} from "@/widgets/Footer"
+import {Header} from "@/widgets/Header"
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import "./globals.scss"
@@ -22,13 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={geistSans.className}>
       <body>
-        <ClientProviders>
-          <Header/>
-          <main>
-            {children}
-          </main>
-          <Footer/>
-        </ClientProviders>
+        <Header/>
+        <main>
+          {children}
+        </main>
+        <Footer/>
       </body>
     </html>
   )

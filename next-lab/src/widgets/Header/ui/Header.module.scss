@@ -1,5 +1,5 @@
-@use '@/shared/styles/variables' as v;
-@use '@/shared/styles/mixins' as m;
+@use '@/shared/ui/styles/variables' as v;
+@use '@/shared/ui/styles/mixins' as m;
 
 .header {
   @include m.d-flex(space-around, center);
