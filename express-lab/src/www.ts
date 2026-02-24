@@ -3,11 +3,14 @@
 /**
  * Module dependencies.
  */
+import dotenv from "dotenv";
 import app from './app.ts';
 import http from 'http';
 import {type HttpError} from "http-errors";
 import {normalizePort} from './utils/server_utils.ts';
 import debugLib from 'debug';
+
+dotenv.config();
 
 const debug = debugLib('fullstack-lab/express-lab:server');
 

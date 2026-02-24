@@ -5,15 +5,20 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    },
+
 // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
-    "types": [],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
+    "allowImportingTsExtensions": true,
 
     // Other Outputs
     "sourceMap": true,
@@ -42,5 +47,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "__tests__", "jest.config.ts"]
 }

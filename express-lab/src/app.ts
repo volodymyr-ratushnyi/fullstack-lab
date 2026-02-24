@@ -7,7 +7,7 @@ import logger from 'morgan';
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
 
-const app = express();
+export const app = express();
 
 // view engine setup
 app.set('views', path.join(process.cwd(), 'src/views'));
