@@ -1,63 +1,36 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-import dotenv from "dotenv";
+import {runDB} from 'src/infrastructure/mongo/db.ts'
 import app from './app.ts';
+import dotenv from "dotenv";
 import http from 'http';
 import {type HttpError} from "http-errors";
-import {normalizePort} from './utils/server_utils.ts';
 import debugLib from 'debug';
 
 dotenv.config();
 
 const debug = debugLib('fullstack-lab/express-lab:server');
 
-/**
- * Get port from environment and store in Express.
- */
+runDB()
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = parseInt(process.env.PORT || '3000', 10);
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
 
 const server = http.createServer(app);
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
 const onError = (error: HttpError) => {
   if (error.syscall !== 'listen') {
-    throw error;
+    throw error
   }
-
-  const bind = typeof port === 'string'
-      ? 'Pipe ' + port
-      : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      //fallthrough
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      //fallthrough
-    default:
-      throw error;
+  const errorMessages: Record<string, string> = {
+    EACCES: 'requires elevated privileges',
+    EADDRINUSE: 'is already in use',
   }
+  const reason = errorMessages[error.code || '']
+  if (reason) {
+    console.error(`Port ${port} ${reason}`)
+    process.exit(1)
+  }
+  throw error
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
 
 const onListening = () => {
   const addr = server.address();
@@ -66,10 +39,6 @@ const onListening = () => {
       : 'port ' + addr?.port;
   debug('Listening on ' + bind);
 }
-
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(port);
 server.on('error', onError);

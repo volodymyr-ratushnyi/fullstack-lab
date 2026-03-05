@@ -1,11 +1,10 @@
+import authRouter from '@auth/presentation/auth.controller.ts';
+import indexRouter from './routes/index.ts';
 import createError, {type HttpError} from 'http-errors';
 import express, {type Request, type Response, type NextFunction} from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-
-import indexRouter from './routes/index.ts';
-import usersRouter from './routes/users.ts';
 
 export const app = express();
 
@@ -20,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', authRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
