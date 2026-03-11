@@ -2,7 +2,7 @@ import {config} from '@auth/config/config.ts'
 import {compare, hash} from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import {User} from '@auth/domain/user.entity.ts'
-import type {LoginUserDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
+import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
 import {authCommandRepository, authQueryRepository} from '@db/auth'
 
 export const register = async (dto: RegisterUserDto) => {
@@ -19,7 +19,7 @@ export const register = async (dto: RegisterUserDto) => {
   await authCommandRepository.createUser(user)
 }
 
-export const login = async ({emailOrUserName, password}: LoginUserDto) => {
+export const login = async ({emailOrUserName, password}: CredentialsDto) => {
   const user = await authQueryRepository.getUserByEmailOrUserName(emailOrUserName)
   if (!user) throw 'Invalid credentials'
 

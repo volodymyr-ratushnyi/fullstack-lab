@@ -7,7 +7,7 @@ export interface RegisterUserDto {
   confirmPassword: string
 }
 
-export interface LoginUserDto {
+export interface CredentialsDto {
   emailOrUserName: string
   password: string
 }

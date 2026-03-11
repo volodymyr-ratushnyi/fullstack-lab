@@ -1,11 +1,8 @@
 import {runDB} from 'src/infrastructure/mongo/db.ts'
 import app from './app.ts';
-import dotenv from "dotenv";
 import http from 'http';
 import {type HttpError} from "http-errors";
 import debugLib from 'debug';
-
-dotenv.config();
 
 const debug = debugLib('fullstack-lab/express-lab:server');
 

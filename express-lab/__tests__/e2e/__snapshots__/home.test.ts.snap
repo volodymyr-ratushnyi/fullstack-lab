@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Home route test Home page snapshot 1`] = `
+"<!DOCTYPE html>
+<html>
+  <head>
+    <title>Express</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Express</h1>
+    <p>Welcome to Express</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Home route test Not found page snapshot 1`] = `
+"<h1>Not Found</h1>
+<h2></h2>
+<pre></pre>
+"
+`;

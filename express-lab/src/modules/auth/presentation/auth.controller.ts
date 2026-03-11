@@ -1,9 +1,11 @@
 import {config} from '@auth/config/config.ts'
-import express, {type Request, type Response} from "express"
-import {body, validationResult} from 'express-validator'
+import express, {type NextFunction, type Request, type Response} from 'express'
+import {body} from 'express-validator'
 import {login, register} from '@auth/services/auth.service.ts'
-import type {LoginUserDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
+import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
+import createError from 'http-errors'
 import ms from 'ms'
+import {validateMiddleware} from 'src/middlewares/validate.middleware.ts'
 
 const router = express.Router()
 
@@ -13,24 +15,27 @@ router.post('/register',
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     body('confirmPassword').custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error('Password confirmation does not match password')
+        throw new Error('Password confirmation does not match password.')
       }
       return true
     })
   ],
-  async (req: Request, res: Response) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() })
-
+  validateMiddleware,
+  async (req: Request, res: Response, next: NextFunction) => {
     const user: RegisterUserDto = req.body
     await register(user)
-    res.status(201).json({ message: 'User registered successfully' })
+      .then(() => {
+        res.status(201).json({ message: 'User registered successfully' })
+      })
+      .catch((err) => {
+        next(err)
+      })
   }
 )
 
-router.post('/login', async (req: Request, res: Response) => {
-  const user: LoginUserDto = req.body
-  await login(user)
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
+  const credentials: CredentialsDto = req.body
+  await login(credentials)
     .then((token) => {
       res.cookie('token', token, {
         signed: true,
@@ -42,7 +47,7 @@ router.post('/login', async (req: Request, res: Response) => {
       res.status(200).json({ message: 'Logged in successfully' });
     })
     .catch((message) => {
-      res.status(400).json({ message })
+      next(createError(400, message))
     })
 })
 

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/www.js",
-    "watch": "nodemon src/www.ts",
+    "watch": "nodemon --exec tsx src/www.ts",
     "test": "jest"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.1.0",
+    "mongodb-memory-server": "^11.0.1",
     "mongoose": "^9.2.3",
     "morgan": "~1.9.1",
     "ms": "^2.1.3",
@@ -42,6 +43,7 @@
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

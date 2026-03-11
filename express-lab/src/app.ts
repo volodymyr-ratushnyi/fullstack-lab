@@ -1,4 +1,5 @@
 import authRouter from '@auth/presentation/auth.controller.ts';
+import {config} from 'src/config/config.ts'
 import indexRouter from './routes/index.ts';
 import createError, {type HttpError} from 'http-errors';
 import express, {type Request, type Response, type NextFunction} from 'express';
@@ -15,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.cookies.secret));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.use('/', indexRouter);
@@ -26,15 +27,19 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  const error = req.app.get('env') === 'development' ? err : {}
+  res.status(err.status || 500)
+  if (req.originalUrl.startsWith('/api')) {
+    res.json({
+      message: err.message,
+      error
+    })
+  } else {
+    res.locals.message = err.message
+    res.locals.error = error
+    res.render('error')
+  }
+})
 
 export default app;
