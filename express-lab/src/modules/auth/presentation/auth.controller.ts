@@ -1,5 +1,5 @@
 import {config} from '@auth/config/config.ts'
-import express, {type NextFunction, type Request, type Response} from 'express'
+import {type NextFunction, type Request, type Response, Router} from 'express'
 import {body} from 'express-validator'
 import {login, register} from '@auth/services/auth.service.ts'
 import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
@@ -7,7 +7,7 @@ import createError from 'http-errors'
 import ms from 'ms'
 import {validateMiddleware} from 'src/middlewares/validate.middleware.ts'
 
-const router = express.Router()
+const router = Router()
 
 router.post('/register',
   [
@@ -40,7 +40,7 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       res.cookie('token', token, {
         signed: true,
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV !== 'test',
         sameSite: 'lax',
         maxAge: ms(config.jwt.expiresIn)
       })

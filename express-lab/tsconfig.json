@@ -6,7 +6,8 @@
     "paths": {
       "src/*": ["src/*"],
       "@db/*": ["src/modules/*/infrastructure/mongo/index.ts"],
-      "@auth/*": ["src/modules/auth/*"]
+      "@auth/*": ["src/modules/auth/*"],
+      "@user/*": ["src/modules/user/*"]
     },
     "module": "nodenext",
     "target": "esnext",

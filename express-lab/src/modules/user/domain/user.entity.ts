@@ -1,4 +1,4 @@
-import type {UserProps} from '@auth/domain/user.types.ts'
+import type {UserProps} from '@user/domain/user.types.ts'
 
 export class User {
   private constructor(props: UserProps) {

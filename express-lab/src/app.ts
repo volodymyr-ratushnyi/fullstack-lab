@@ -1,4 +1,4 @@
-import authRouter from '@auth/presentation/auth.controller.ts';
+import apiRouter from './routes/api.router.ts';
 import {config} from 'src/config/config.ts'
 import indexRouter from './routes/index.ts';
 import createError, {type HttpError} from 'http-errors';
@@ -20,7 +20,7 @@ app.use(cookieParser(config.cookies.secret));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.use('/', indexRouter);
-app.use('/api', authRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

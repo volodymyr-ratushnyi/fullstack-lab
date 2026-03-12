@@ -2,6 +2,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 import app from "src/app.ts"
 import request from "supertest"
+import { sign } from 'cookie-signature'
 
 describe('The auth tests', () => {
   const agent = request.agent(app)
@@ -32,94 +33,91 @@ describe('The auth tests', () => {
     password: user.password
   }
 
-  it('should not register user without first name', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, firstName: ''})
-      .expect(500)
+  const auth = {
+    register: (data: typeof user) => agent.post('/api/auth/register').send(data),
+    login: (data: typeof credentials) => agent.post('/api/auth/login').send(data),
+    logout: () => agent.get('/api/auth/logout')
+  }
+
+  const users = {
+    all: () => agent.get('/api/users'),
+    profile: () => agent.get('/api/users/profile'),
+    invalidProfile: () => request(app).get('/api/users/profile')
+  }
+
+  it('Should not register user without first name', async () => {
+    const res = await auth.register({...user, firstName: ''}).expect(500)
     expect(res.body.message).toBe('User validation failed: firstName: Path `firstName` is required.')
   });
 
-  it('should not register user without last name', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, lastName: ''})
-      .expect(500)
+  it('Should not register user without last name', async () => {
+    const res = await auth.register({...user, lastName: ''}).expect(500)
     expect(res.body.message).toBe('User validation failed: lastName: Path `lastName` is required.')
   });
 
-  it('should not register user without username', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, userName: ''})
-      .expect(500)
+  it('Should not register user without username', async () => {
+    const res = await auth.register({...user, userName: ''}).expect(500)
     expect(res.body.message).toBe('User validation failed: userName: Path `userName` is required.')
   });
 
-  it('should not register user without email', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, email: ''})
-      .expect(400)
+  it('Should not register user without email', async () => {
+    const res = await auth.register({...user, email: ''}).expect(400)
     expect(res.body.message).toBe('Enter a valid email')
   });
 
-  it('should not register user without password', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, password: ''})
-      .expect(400)
+  it('Should not register user without password', async () => {
+    const res = await auth.register({...user, password: ''}).expect(400)
     expect(res.body.message).toBe('Password must be at least 6 characters long')
   });
 
-  it('should not register user with another confirmPassword', async () => {
-    const res = await agent
-      .post('/api/register')
-      .send({...user, confirmPassword: '1234567'})
-      .expect(400)
+  it('Should not register user with another confirmPassword', async () => {
+    const res = await auth.register({...user, confirmPassword: '1234567'}).expect(400)
     expect(res.body.message).toBe('Password confirmation does not match password.')
   });
 
-  it('should register user', async () => {
-    await agent
-      .post('/api/register')
-      .send(user)
-      .expect(201)
+  it('Should register user', async () => {
+    await auth.register(user).expect(201)
   })
 
-  it('should not login user with invalid userName or email', async () => {
-    const res = await agent
-      .post('/api/login')
-      .send({...credentials, emailOrUserName: 'invalid'})
-      .expect(400)
+  it('Should not login user with invalid userName or email', async () => {
+    const res = await auth.login({...credentials, emailOrUserName: 'invalid'}).expect(400)
     expect(res.body.message).toBe('Invalid credentials')
   })
 
-  it('should not login user with invalid password', async () => {
-    const res = await agent
-      .post('/api/login')
-      .send({...credentials, password: 'invalid'})
-      .expect(400)
+  it('Should not login user with invalid password', async () => {
+    const res = await auth.login({...credentials, password: 'invalid'}).expect(400)
     expect(res.body.message).toBe('Invalid credentials')
   })
 
-  it('should login user with user name', async () => {
-    await agent
-      .post('/api/login')
-      .send(credentials)
-      .expect(200)
+  it('Should login user with user name', async () => {
+    const res = await auth.login(credentials).expect(200)
+    expect(res.body.message).toBe('Logged in successfully')
   })
 
-  it('should logout user', async () => {
-    await agent
-      .get('/api/logout')
-      .expect(200)
+  it('Exist user after register', async () => {
+    const res = await users.all().expect(200)
+    expect(res.body[0].userName).toBe('userName')
   })
 
-  it('should login user with email', async () => {
-    await agent
-      .post('/api/login')
-      .send({...credentials, emailOrUserName: user.email})
-      .expect(200)
+  it('Should logout user', async () => {
+    const res = await auth.logout().expect(200)
+    expect(res.body.message).toBe('Logged out successfully')
+  })
+
+  it('Should login user with email', async () => {
+    await auth.login({...credentials, emailOrUserName: user.email}).expect(200)
+  })
+
+  it('Profile after login', async () => {
+    const res = await users.profile().expect(200)
+    expect(res.body.userName).toBe('userName')
+  })
+
+  it('Profile without token', async () => {
+    const signedCookie = 's:' + sign('invalid-jwt', process.env.COOKIES_SECRET as string)
+    const res = await users.invalidProfile()
+      .set('Cookie', `token=${signedCookie}`)
+      .expect(400)
+    expect(res.body.message).toBe('Invalid token')
   })
 })

@@ -1,9 +1,9 @@
 import {config} from '@auth/config/config.ts'
 import {compare, hash} from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import {User} from '@auth/domain/user.entity.ts'
+import {User} from '@user/domain/user.entity.ts'
 import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
-import {authCommandRepository, authQueryRepository} from '@db/auth'
+import {userCommandRepository, userQueryRepository} from '@db/user'
 
 export const register = async (dto: RegisterUserDto) => {
   const password = await hash(dto.password, 10)
@@ -16,11 +16,11 @@ export const register = async (dto: RegisterUserDto) => {
     role: 'user',
     createdAt: new Date()
   })
-  await authCommandRepository.createUser(user)
+  await userCommandRepository.createUser(user)
 }
 
 export const login = async ({emailOrUserName, password}: CredentialsDto) => {
-  const user = await authQueryRepository.getUserByEmailOrUserName(emailOrUserName)
+  const user = await userQueryRepository.getUserByEmailOrUserName(emailOrUserName)
   if (!user) throw 'Invalid credentials'
 
   const isMatch = await compare(password, user.password)
