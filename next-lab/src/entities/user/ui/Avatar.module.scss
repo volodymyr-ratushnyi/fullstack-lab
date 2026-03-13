@@ -5,7 +5,7 @@
 }
 
 .emptyAvatar {
-  @include m.d-flex(center, center);
+  @include m.d-flex(row, center, center);
   width: 46px;
   height: 46px;
   background: gray;

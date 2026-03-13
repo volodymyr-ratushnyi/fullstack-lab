@@ -1,1 +1,9 @@
-export { auth as proxy } from "@/features/auth/config/auth"
+import { auth } from "@/features/auth/config/auth"
+
+export default auth((req) => {
+
+})
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+}

@@ -1,6 +1,6 @@
 import {metaData} from "@/shared/config/seo.config"
 import React from 'react'
-import style from './Footer.module.scss'
+import style from '@/widgets/footer/_ui/Footer.module.scss'
 
 export const Footer = () => {
   return (

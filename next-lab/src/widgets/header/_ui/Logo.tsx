@@ -5,7 +5,7 @@ import Link from "next/link"
 import React from 'react'
 import style from './Logo.module.scss'
 
-export const Logo = () => {
+const Logo = () => {
   return (
       <Link href={PagesLinkConfig.HOME.href} className={style.logo}>
         <IconWolf/>

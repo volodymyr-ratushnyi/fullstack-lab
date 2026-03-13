@@ -1,0 +1,35 @@
+@use '@/shared/ui/styles/mixins' as m;
+
+.auth {
+  @include m.d-flex(column, start, stretch, nowrap, 10px);
+  padding: 24px;
+  max-width: fit-content;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 35px 0 #0000001a;
+  margin: 50px auto;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  svg {
+    margin-right: 25px;
+  }
+
+  span {
+    text-align: center;
+    color: gray;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  footer {
+    width: 0;
+    min-width: 100%;
+    font-size: 13px;
+    padding-top: 8px;
+    border-top: 1px solid gainsboro;
+  }
+}

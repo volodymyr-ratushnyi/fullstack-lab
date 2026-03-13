@@ -2,7 +2,7 @@
 @use '@/shared/ui/styles/mixins' as m;
 
 .footer {
-  @include m.d-flex(center, center);
+  @include m.d-flex(row, center, center);
   height: 40px;
   background-color: v.$widgets-color;
 }

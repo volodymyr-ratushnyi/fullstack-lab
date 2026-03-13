@@ -1,6 +1,6 @@
 import { metaData } from "@/shared/config/seo.config"
-import {Footer} from "@/widgets/Footer"
-import {Header} from "@/widgets/Header"
+import {Footer} from "@/widgets/footer/Footer"
+import {Header} from "@/widgets/header/Header"
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import "./globals.scss"

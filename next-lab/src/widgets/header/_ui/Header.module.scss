@@ -2,7 +2,7 @@
 @use '@/shared/ui/styles/mixins' as m;
 
 .header {
-  @include m.d-flex(space-around, center);
+  @include m.d-flex(row, space-around, center);
   height: 60px;
   background-color: v.$widgets-color;
   box-shadow: 0 0 10px gray;
