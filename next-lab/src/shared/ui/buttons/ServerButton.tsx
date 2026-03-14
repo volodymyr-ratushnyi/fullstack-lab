@@ -1,3 +1,4 @@
+import {Button} from '@/components/ui/button'
 import React, {ReactNode} from 'react'
 
 export const ServerButton = ({action, children}: Readonly<{
@@ -6,9 +7,9 @@ export const ServerButton = ({action, children}: Readonly<{
 }>) => {
   return (
     <form action={action}>
-      <button type={"submit"}>
+      <Button variant={'outline'} size={'lg'} type={'submit'}>
         {children}
-      </button>
+      </Button>
     </form>
   )
 }

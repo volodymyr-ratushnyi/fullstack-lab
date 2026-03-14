@@ -1,4 +1,4 @@
 export const metaData = {
-  title: "Next lab",
+  title: "NextLab",
   description: "For learning next.js",
 }

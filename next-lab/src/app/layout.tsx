@@ -3,7 +3,7 @@ import {Footer} from "@/widgets/footer/Footer"
 import {Header} from "@/widgets/header/Header"
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
-import "./globals.scss"
+import "app/globals.css"
 import { ReactNode } from "react"
 
 const geistSans = Geist({

@@ -7,12 +7,10 @@
   box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 35px 0 #0000001a;
   margin: 50px auto;
 
-  h2 {
-    margin-bottom: 10px;
-  }
-
   svg {
-    margin-right: 25px;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
   }
 
   span {
@@ -21,15 +19,20 @@
   }
 
   p {
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 13px;
   }
 
   footer {
+    margin-top: -5px;
     width: 0;
     min-width: 100%;
     font-size: 13px;
     padding-top: 8px;
     border-top: 1px solid gainsboro;
+  }
+
+  a {
+    color: #167dff;
   }
 }

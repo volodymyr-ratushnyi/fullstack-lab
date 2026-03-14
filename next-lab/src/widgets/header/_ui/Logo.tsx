@@ -9,7 +9,9 @@ const Logo = () => {
   return (
       <Link href={PagesLinkConfig.HOME.href} className={style.logo}>
         <IconWolf/>
-        <h1>{metaData.title}</h1>
+        <h2 className="text-3xl font-semibold tracking-tight">
+          {metaData.title}
+        </h2>
       </Link>
   )
 }

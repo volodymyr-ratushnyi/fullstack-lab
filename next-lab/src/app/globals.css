@@ -1,43 +1,9 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 main {
   flex: 1;
-}
-
-li {
-  list-style-type: none;
-}
-
-button {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  border: 1px solid gray;
-  border-radius: 20px 20px;
-  padding: 8px 22px;
-  background: white;
-
-  cursor: pointer;
-  transition: 0.1s;
-
-  &:hover {
-    background: #f1f1f1;
-  }
 }
 
 :root {
@@ -109,7 +75,7 @@ button {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@theme inline {
+@theme {
   --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -153,12 +119,21 @@ button {
 
 @layer base {
   * {
+    padding: 0;
+    margin: 0;
     @apply border-border outline-ring/50;
   }
   body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     @apply bg-background text-foreground;
   }
   html {
     @apply font-sans;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
