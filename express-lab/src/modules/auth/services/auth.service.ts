@@ -1,22 +1,12 @@
 import {config} from '@auth/config/config.ts'
-import {compare, hash} from 'bcryptjs'
+import {createUser} from '@user/services/user.service.ts'
+import {compare} from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import {User} from '@user/domain/user.entity.ts'
 import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
-import {userCommandRepository, userQueryRepository} from '@db/user'
+import {userQueryRepository} from '@db/user'
 
 export const register = async (dto: RegisterUserDto) => {
-  const password = await hash(dto.password, 10)
-  const user = User.create({
-    firstName: dto.firstName,
-    lastName: dto.lastName,
-    userName: dto.userName,
-    email: dto.email,
-    password,
-    role: 'user',
-    createdAt: new Date()
-  })
-  await userCommandRepository.createUser(user)
+  await createUser(dto)
 }
 
 export const login = async ({emailOrUserName, password}: CredentialsDto) => {
