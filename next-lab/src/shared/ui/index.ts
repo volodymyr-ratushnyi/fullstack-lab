@@ -1,2 +1,2 @@
-export { ServerButton } from './buttons/ServerButton'
-export { IconWolf } from './icons/cool_wolf_sunglasses'
+export { ServerButton } from '../ui/components/ServerButton/ServerButton'
+export { Button } from '../ui/components/shadcn/button'

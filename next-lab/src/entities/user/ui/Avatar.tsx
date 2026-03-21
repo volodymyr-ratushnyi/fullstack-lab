@@ -1,4 +1,4 @@
-import {IconWolf} from "@/shared/ui"
+import {IconWolf} from "@/shared/ui/icons"
 import {DefaultUser} from "@auth/core/types"
 import Image from "next/image"
 import React from 'react'
