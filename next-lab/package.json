@@ -61,5 +61,6 @@
       "types": "./src/*.ts",
       "default": "./src/*.js"
     }
-  }
+  },
+  "packageManager": "yarn@4.13.0"
 }
