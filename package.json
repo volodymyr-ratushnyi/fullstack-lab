@@ -1,0 +1,9 @@
+{
+  "name": "fullstack-lab",
+  "private": true,
+  "packageManager": "yarn@4.13.0",
+  "workspaces": [
+    "next-lab",
+    "express-lab"
+  ]
+}
