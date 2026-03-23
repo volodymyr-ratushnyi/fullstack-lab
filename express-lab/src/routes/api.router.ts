@@ -1,4 +1,4 @@
-import authRouter from '@auth/presentation/auth.controller.ts'
+import authRouter from '@auth/presentation/auth.router.ts'
 import usersRouter from '@user/presentation/user.controller.ts'
 import mailRouter from '@mail/presentation/mail.controller.ts'
 import { Router } from 'express'

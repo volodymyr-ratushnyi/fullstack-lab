@@ -1,6 +1,6 @@
 import {userCommandRepository} from '@db/user'
 import {User} from '@user/domain/user.entity.ts'
-import type {CreateUserDto} from '@user/dtos/user.dto.ts'
+import type {CreateUserDto} from '@user/domain/dtos/user.dto.ts'
 import {hash} from 'bcryptjs'
 
 export const createUser = async (dto: CreateUserDto) => {

@@ -1,29 +1,19 @@
+import type {LoginUseCase} from '@auth/application/login.use-case.ts'
+import type {RegisterUseCase} from '@auth/application/register.use-case.ts'
 import {config} from '@auth/config/config.ts'
-import {type NextFunction, type Request, type Response, Router} from 'express'
-import {body} from 'express-validator'
-import {login, register} from '@auth/services/auth.service.ts'
-import type {CredentialsDto, RegisterUserDto} from '@auth/dtos/auth.dto.ts'
-import createError from 'http-errors'
+import type {CredentialsDto, RegisterUserDto} from '@auth/domain/dtos/auth.dto.ts'
+import type {NextFunction, Request, Response} from 'express'
 import ms from 'ms'
-import {validateMiddleware} from 'src/middlewares/validate.middleware.ts'
+import createError from 'http-errors'
 
-const router = Router()
+export class AuthController {
+  constructor(
+    private readonly loginUseCase: LoginUseCase,
+    private readonly registerUseCase: RegisterUseCase,
+  ) {}
 
-router.post('/register',
-  [
-    body('email').isEmail().withMessage('Enter a valid email'),
-    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-    body('confirmPassword').custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error('Password confirmation does not match password.')
-      }
-      return true
-    })
-  ],
-  validateMiddleware,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const user: RegisterUserDto = req.body
-    await register(user)
+  public async register(req: Request<unknown, unknown, RegisterUserDto>, res: Response, next: NextFunction) {
+    await this.registerUseCase.execute(req.body)
       .then(() => {
         res.status(201).json({ message: 'User registered successfully' })
       })
@@ -31,12 +21,10 @@ router.post('/register',
         next(err)
       })
   }
-)
 
-router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-  const credentials: CredentialsDto = req.body
-  await login(credentials)
-    .then((token) => {
+  public async login(req: Request<unknown, unknown, CredentialsDto>, res: Response, next: NextFunction) {
+    try {
+      const token = await this.loginUseCase.execute(req.body)
       res.cookie('token', token, {
         signed: true,
         httpOnly: true,
@@ -44,23 +32,21 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
         sameSite: 'lax',
         maxAge: ms(config.jwt.expiresIn)
       })
-      res.status(200).json({ message: 'Logged in successfully' });
+      res.status(200).json({ message: 'Logged in successfully' })
+    } catch (error) {
+      next(createError(400, error instanceof Error ? error.message : 'Unknown error'))
+    }
+  }
+
+  public logout(req: Request, res: Response) {
+    res.clearCookie('token', {
+      signed: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: ms(config.jwt.expiresIn)
     })
-    .catch((message) => {
-      next(createError(400, message))
-    })
-})
 
-router.get('/logout', (req: Request, res: Response) => {
-  res.clearCookie('token', {
-    signed: true,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: ms(config.jwt.expiresIn)
-  })
-
-  res.status(200).json({ message: 'Logged out successfully' })
-})
-
-export default router
+    res.status(200).json({ message: 'Logged out successfully' })
+  }
+}
