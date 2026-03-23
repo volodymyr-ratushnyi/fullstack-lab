@@ -1,4 +1,4 @@
-import { auth } from "@/features/auth/config/auth"
+import { auth } from "@/features/auth/auth"
 
 export default auth((req) => {
 

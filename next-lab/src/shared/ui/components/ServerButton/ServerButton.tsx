@@ -1,6 +1,6 @@
 import {Button, buttonVariants} from 'shared/ui/components/shadcn/button'
-import {VariantProps} from 'class-variance-authority'
-import React, {ReactNode} from 'react'
+import type {VariantProps} from 'class-variance-authority'
+import React, {type ReactNode} from 'react'
 
 export const ServerButton = ({
   action,

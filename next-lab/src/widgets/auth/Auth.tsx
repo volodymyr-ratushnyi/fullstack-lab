@@ -1,4 +1,4 @@
-import {signIn} from '@/features/auth'
+import {signIn} from '@/features/auth/auth'
 import {PagesLinkConfig} from '@/shared/config/pages-url.config'
 import {Button, ServerButton} from '@/shared/ui'
 import {IconEmail, IconGitHub, IconGoogle} from '@/shared/ui/icons'

@@ -10,8 +10,6 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
     "skipLibCheck": true,
     "moduleDetection": "force"
   }

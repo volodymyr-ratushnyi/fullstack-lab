@@ -1,7 +1,7 @@
 import {Avatar} from "@/entities/user"
-import {auth, signIn, signOut} from "@/features/auth"
+import {auth, signIn, signOut} from "@/features/auth/auth"
 import {ServerButton} from "@/shared/ui"
-import {Session} from "next-auth"
+import type {Session} from "next-auth"
 import style from './UserMenu.module.scss'
 
 export const UserMenu = async () => {

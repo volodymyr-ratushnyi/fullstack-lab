@@ -1,4 +1,4 @@
-import {SVGProps} from "react"
+import type {SVGProps} from "react"
 
 export const IconWolf = ({width = "46px", height = "46px", viewBox = "0 0 512 512", ...props}: SVGProps<SVGSVGElement>) => {
   return (

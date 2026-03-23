@@ -1,19 +1,20 @@
 import {api} from '@/shared/lib/api'
+import {env} from '@/shared/lib/env'
 import Credentials from "@auth/core/providers/credentials"
-import NextAuth from "next-auth"
+import type { NextAuthConfig } from 'next-auth'
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import {NextResponse} from 'next/server'
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authConfig: NextAuthConfig = {
   providers: [
     GitHubProvider({
-      clientId: process.env.AUTH_GITHUB_ID,
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      clientId: env.AUTH_GITHUB_ID,
+      clientSecret: env.AUTH_GITHUB_SECRET,
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: env.GOOGLE_ID,
+      clientSecret: env.GOOGLE_SECRET,
     }),
     Credentials({
       authorize: async (credentials) => {
@@ -52,4 +53,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: '/auth/login'
   }
-})
+}
