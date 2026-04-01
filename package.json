@@ -3,6 +3,7 @@
   "private": true,
   "packageManager": "yarn@4.13.0",
   "workspaces": [
+    "nest-lab",
     "next-lab",
     "express-lab"
   ]
