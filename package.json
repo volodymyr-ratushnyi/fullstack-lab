@@ -6,5 +6,9 @@
     "nest-lab",
     "next-lab",
     "express-lab"
-  ]
+  ],
+  "scripts": {
+    "start:api": "yarn workspace nest-lab start",
+    "start:dev:api": "yarn workspace nest-lab start:dev"
+  }
 }

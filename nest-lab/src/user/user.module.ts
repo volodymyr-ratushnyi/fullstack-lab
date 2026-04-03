@@ -14,12 +14,14 @@ import { CreateUserHandler } from './application/commands/create-user/create-use
 import { DeleteUserHandler } from './application/commands/delete-user/delete-user.handler';
 import { GetUserByIdHandler } from './application/queries/get-user-by-id/get-user-by-id.handler';
 import { GetAllUsersHandler } from './application/queries/get-all-users/get-all-users.handler';
+import { CqrsModule } from '@nestjs/cqrs';
 
 const CommandHandlers = [CreateUserHandler, DeleteUserHandler];
 const QueryHandlers = [GetUserByIdHandler, GetAllUsersHandler];
 
 @Module({
   imports: [
+    CqrsModule,
     MongooseModule.forFeature([
       { name: UserSchemaClass.name, schema: UserSchema },
     ]),
