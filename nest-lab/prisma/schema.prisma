@@ -1,0 +1,32 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../node_modules/@prisma/client"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [citext]
+}
+
+model User {
+  id String @id @default(uuid(4))
+
+  firstName String
+
+  lastName String
+
+  userName String @unique
+
+  email String @unique @db.Citext
+
+  password String
+
+  role String @default("user")
+
+  isVerified Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}

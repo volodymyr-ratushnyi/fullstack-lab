@@ -1,18 +1,18 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto } from 'src/user/application/dtos/create-user.dto';
-import { UserMapper } from '../mappers/user.mapper';
-import { UserRepository } from '../../domain/user.repository';
-import { UserDocument, UserSchemaClass } from '../schemas/user.schema';
+import { User } from 'src/user/domain/user.entity';
+import { UserMongoMapper } from 'src/user/infrastructure/repositories/mongo/user-mongo.mapper';
+import { UserRepository } from 'src/user/domain/user.repository';
+import { UserDocument, UserSchemaClass } from 'src/user/infrastructure/schemas/user.schema';
 
-export class MongoUserRepository implements UserRepository {
+export class UserMongoRepository implements UserRepository {
   constructor(
     @InjectModel(UserSchemaClass.name)
     private readonly model: Model<UserDocument>,
   ) {}
 
-  public async create(user: CreateUserDto) {
-    const data = UserMapper.toPersistence(user);
+  public async create(user: User) {
+    const data = UserMongoMapper.toPersistence(user);
 
     // Upsert: update if exists, insert if not
     const doc = await this.model
@@ -24,7 +24,7 @@ export class MongoUserRepository implements UserRepository {
       })
       .exec();
 
-    return UserMapper.toDomain(doc);
+    return UserMongoMapper.toDomain(doc);
   }
 
   public async delete(id: string) {

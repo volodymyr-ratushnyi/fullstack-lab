@@ -1,0 +1,21 @@
+import type { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/db/prisma/prisma.service';
+import { User } from 'src/user/domain/user.entity';
+import { UserRepository } from 'src/user/domain/user.repository';
+import { Inject } from '@nestjs/common';
+import { UserPgMapper } from './user-pg.mapper';
+
+export class UserPgRepository implements UserRepository {
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaClient) {}
+
+  public async create(user: User) {
+    const data = UserPgMapper.toPersistence(user);
+    const prismaUser = await this.prisma.user.create({ data });
+
+    return UserPgMapper.toDomain(prismaUser);
+  }
+
+  public async delete(id: string) {
+    await this.prisma.user.delete({ where: { id } });
+  }
+}

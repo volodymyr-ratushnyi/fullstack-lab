@@ -7,8 +7,8 @@ import {
 } from './infrastructure/schemas/user.schema';
 import { UserRepository } from './domain/user.repository';
 import { UserReadRepository } from './domain/user-read.repository';
-import { MongoUserRepository } from './infrastructure/repositories/mongo-user.repository';
-import { MongoUserReadRepository } from './infrastructure/repositories/mongo-user-read.repository';
+import { UserMongoRepository } from 'src/user/infrastructure/repositories/mongo/user-mongo.repository';
+import { UserMongoReadRepository } from 'src/user/infrastructure/repositories/mongo/user-mongo-read.repository';
 
 import { CreateUserHandler } from './application/commands/create-user/create-user.handler';
 import { DeleteUserHandler } from './application/commands/delete-user/delete-user.handler';
@@ -28,8 +28,8 @@ const QueryHandlers = [GetUserByIdHandler, GetAllUsersHandler];
   ],
   controllers: [UserController],
   providers: [
-    { provide: UserRepository, useClass: MongoUserRepository },
-    { provide: UserReadRepository, useClass: MongoUserReadRepository },
+    { provide: UserRepository, useClass: UserMongoRepository },
+    { provide: UserReadRepository, useClass: UserMongoReadRepository },
     ...CommandHandlers,
     ...QueryHandlers,
   ],
