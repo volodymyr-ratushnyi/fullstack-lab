@@ -18,7 +18,7 @@ export class UserDto {
 
   @IsString()
   @Length(2, 40)
-  userName: string;
+  username: string;
 
   @IsEmail()
   email: string;

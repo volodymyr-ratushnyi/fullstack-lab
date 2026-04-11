@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { RegisterHandler } from 'src/auth/applications/commands/register/register.handler';
 import { AuthController } from './auth.controller';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
+  imports: [CqrsModule],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [RegisterHandler],
 })
 export class AuthModule {}

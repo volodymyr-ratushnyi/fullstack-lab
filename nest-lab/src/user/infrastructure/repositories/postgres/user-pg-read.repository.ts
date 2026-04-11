@@ -7,17 +7,12 @@ import { UserPgMapper } from 'src/user/infrastructure/repositories/postgres/user
 export class UserPgReadRepository implements UserReadRepository {
   constructor(@Inject() private readonly prisma: PrismaService) {}
 
-  async findByUsernameOrEmail(usernameOrEmail: string) {
+  async findByEmailOrUsername(usernameOrEmail: string) {
     const user = await this.prisma.user.findFirst({
       where: {
-        OR: [{ email: usernameOrEmail }, { userName: usernameOrEmail }],
+        OR: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
       },
     });
-    return user ? UserPgMapper.toDomain(user) : null;
-  }
-
-  async findByEmail(email: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
     return user ? UserPgMapper.toDomain(user) : null;
   }
 

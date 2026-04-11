@@ -10,12 +10,14 @@ export class UserPgRepository implements UserRepository {
 
   public async create(user: User) {
     const data = UserPgMapper.toPersistence(user);
-    const prismaUser = await this.prisma.user.create({ data });
-
-    return UserPgMapper.toDomain(prismaUser);
+    await this.prisma.user.create({ data });
   }
 
   public async delete(id: string) {
     await this.prisma.user.delete({ where: { id } });
+  }
+
+  public async update(id: string, data: Partial<User>) {
+    await this.prisma.user.update({ where: { id }, data })
   }
 }

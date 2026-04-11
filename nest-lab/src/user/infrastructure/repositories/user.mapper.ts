@@ -6,7 +6,7 @@ export class UserMapper {
     return {
       firstName: user.firstName,
       lastName: user.lastName,
-      userName: user.userName,
+      username: user.username,
       email: user.email,
       password: user.password,
     };

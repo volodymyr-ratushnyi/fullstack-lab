@@ -1,4 +1,3 @@
-import { CreateUserDto } from 'src/user/application/dtos/create-user.dto';
 import { UserDto } from 'src/user/application/dtos/user.dto';
 import { UserMapper } from 'src/user/infrastructure/repositories/user.mapper';
 import { UserDocument } from '../../schemas/user.schema';
@@ -9,7 +8,7 @@ export class UserMongoMapper extends UserMapper{
     user.id = doc._id.toString();
     user.firstName = doc.firstName;
     user.lastName = doc.lastName;
-    user.userName = doc.userName;
+    user.username = doc.username;
     user.email = doc.email;
     return user;
   }

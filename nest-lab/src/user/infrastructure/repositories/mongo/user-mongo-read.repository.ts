@@ -13,27 +13,24 @@ export class UserMongoReadRepository implements UserReadRepository {
     private readonly model: Model<UserDocument>,
   ) {}
 
-  async findByUsernameOrEmail(usernameOrEmail: string) {
+  async findByEmailOrUsername(usernameOrEmail: string) {
     const doc = await this.model.findOne({
-      $or: [{ email: usernameOrEmail }, { userName: usernameOrEmail }],
+      $or: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
     });
-    return doc ? UserMongoMapper.toDomain(doc) : null
-  }
-
-  async findByEmail(email: string) {
-    const doc = await this.model.findOne({ email }).exec()
-    return doc ? UserMongoMapper.toDomain(doc) : null
+    return doc ? UserMongoMapper.toDomain(doc) : null;
   }
 
   async findById(id: string) {
     const doc = await this.model.findById(id).lean().exec();
     return doc ? UserMongoMapper.toDomain(doc) : null;
-  };
+  }
 
   async findAll() {
     const docs = await this.model
       .find()
-      .select('_id firstName lastName userName email role isVerified createdAt updatedAt')
+      .select(
+        '_id firstName lastName username email role isVerified createdAt updatedAt',
+      )
       .lean()
       .exec();
     return docs.map(UserMongoMapper.toDomain);

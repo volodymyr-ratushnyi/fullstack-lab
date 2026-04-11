@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserCommand } from 'src/user/application/commands/create-user/create-user.command';
 import { DeleteUserCommand } from 'src/user/application/commands/delete-user/delete-user.command';
+import { UpdateUserCommand } from 'src/user/application/commands/update-user/update-user.command';
 import { CreateUserDto } from 'src/user/application/dtos/create-user.dto';
 import { GetAllUsersQuery } from 'src/user/application/queries/get-all-users/get-all-users.query';
 import { GetUserByIdQuery } from 'src/user/application/queries/get-user-by-id/get-user-by-id.query';
@@ -28,7 +29,7 @@ export class UserController {
       new CreateUserCommand(
         dto.firstName,
         dto.lastName,
-        dto.userName,
+        dto.username,
         dto.email,
         dto.password,
       ),
@@ -45,13 +46,16 @@ export class UserController {
     return this.queryBus.execute(new GetUserByIdQuery(id));
   }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateUserDto: UpdateUserDto,
-  // ) {
-  //   return this.commandBus.execute(+id, updateUserDto);
-  // }
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.commandBus.execute(new UpdateUserCommand(
+      id,
+      updateUserDto
+    ));
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Controller, Get, Post, Body, Res } from '@nestjs/common';
+import type { Response } from 'express';
+import { CommandBus } from '@nestjs/cqrs';
+import { LoginCommand } from 'src/auth/applications/commands/login/login.command';
+import { RegisterCommand } from 'src/auth/applications/commands/register/register.command';
+import { CredentialsDto } from 'src/auth/applications/dtos/credentials.dto';
+import { RegisterDto } from 'src/auth/applications/dtos/register.dto';
+import { AppConfigService } from 'src/shared/config/config.service';
+import ms from 'ms';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly config: AppConfigService,
+    private readonly commandBus: CommandBus,
+  ) {}
 
   @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  register(@Body() dto: RegisterDto) {
+    return this.commandBus.execute(new RegisterCommand(
+      dto.firstName,
+      dto.lastName,
+      dto.username,
+      dto.email,
+      dto.password,
+    ));
+  }
+
+  @Post()
+  async login(@Body() dto: CredentialsDto, @Res() res: Response) {
+    const token = await this.commandBus.execute(new LoginCommand(
+      dto.emailOrUsername,
+      dto.password,
+    ));
+    res.cookie('token', token, {
+      signed: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'test',
+      sameSite: 'lax',
+      maxAge: ms(this.config.jwtExpiresIn),
+    });
   }
 
   @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  logout(@Res() res: Response) {
+    res.clearCookie('token', {
+      signed: true,
+      httpOnly: true,
+      secure: this.config.nodeEnv === 'production',
+      sameSite: 'lax',
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { IsString, IsEmail, Length, Matches } from 'class-validator';
+import { MatchPassword } from 'src/shared/validators/match.validator';
 
-export class CreateUserDto {
+export class RegisterDto {
   @IsString()
   @Length(2, 40)
   firstName: string;
@@ -22,4 +23,7 @@ export class CreateUserDto {
     message: 'Password need include 1 upper case letter and a single digit',
   })
   password: string;
+
+  @MatchPassword('password')
+  confirmPassword: string;
 }

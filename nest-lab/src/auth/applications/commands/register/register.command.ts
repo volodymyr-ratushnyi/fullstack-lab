@@ -1,4 +1,4 @@
-export class CreateUserCommand {
+export class RegisterCommand {
   constructor(
     public readonly firstName: string,
     public readonly lastName: string,

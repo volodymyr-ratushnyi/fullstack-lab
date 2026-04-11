@@ -16,7 +16,7 @@ export class UserSchemaClass {
   lastName: string;
 
   @Prop({ required: true, unique: true, trim: true })
-  userName: string;
+  username: string;
 
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
   email: string;

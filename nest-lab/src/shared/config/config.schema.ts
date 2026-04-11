@@ -2,6 +2,8 @@ import z from 'zod'
 import ms, { StringValue } from 'ms';
 
 export const envSchema = z.object({
+  NODE_ENV: z.enum(['development', 'production', 'test']),
+
   COOKIES_SECRET: z.string().min(1),
 
   JWT_SECRET: z.string().min(1),
@@ -15,7 +17,12 @@ export const envSchema = z.object({
     .transform((val) => val as StringValue),
 
   DB_TYPE: z.enum(['postgres', 'mongodb']),
-  MONGO_URL: z.string().min(1),
+
+  MONGO_USER: z.string(),
+  MONGO_PASSWORD: z.string(),
+  MONGO_HOST: z.string(),
+  MONGO_PORT: z.coerce.number(),
+  MONGO_DB: z.string(),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;
