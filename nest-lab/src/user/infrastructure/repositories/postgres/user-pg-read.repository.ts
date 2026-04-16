@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/db/prisma/prisma.service';
 import { UserReadRepository } from 'src/user/domain/user-read.repository';
 import { UserPgMapper } from 'src/user/infrastructure/repositories/postgres/user-pg.mapper';
 
 @Injectable()
 export class UserPgReadRepository implements UserReadRepository {
-  constructor(@Inject() private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findByEmailOrUsername(usernameOrEmail: string) {
     const user = await this.prisma.user.findFirst({
@@ -23,7 +23,6 @@ export class UserPgReadRepository implements UserReadRepository {
 
   async findAll() {
     const users = await this.prisma.user.findMany();
-
     return users.map(UserPgMapper.toDomain);
   }
 }

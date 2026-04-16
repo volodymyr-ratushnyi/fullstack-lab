@@ -43,4 +43,11 @@ export class AppConfigService {
   get mongoDb() {
     return this.config.get('MONGO_DB', { infer: true });
   }
+
+  get googleAppEmail() {
+    return this.config.get('GOOGLE_APP_EMAIL', { infer: true });
+  }
+  get googleAppPassword() {
+    return this.config.get('GOOGLE_APP_PASSWORD', { infer: true });
+  }
 }

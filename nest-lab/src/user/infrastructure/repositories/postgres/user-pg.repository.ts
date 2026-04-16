@@ -1,12 +1,10 @@
-import type { PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/db/prisma/prisma.service';
 import { User } from 'src/user/domain/user.entity';
 import { UserRepository } from 'src/user/domain/user.repository';
-import { Inject } from '@nestjs/common';
 import { UserPgMapper } from './user-pg.mapper';
 
 export class UserPgRepository implements UserRepository {
-  constructor(@Inject(PrismaService) private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   public async create(user: User) {
     const data = UserPgMapper.toPersistence(user);
@@ -18,6 +16,6 @@ export class UserPgRepository implements UserRepository {
   }
 
   public async update(id: string, data: Partial<User>) {
-    await this.prisma.user.update({ where: { id }, data })
+    await this.prisma.user.update({ where: { id }, data });
   }
 }
