@@ -4,8 +4,7 @@
   "packageManager": "yarn@4.13.0",
   "workspaces": [
     "nest-lab",
-    "next-lab",
-    "express-lab"
+    "next-lab"
   ],
   "scripts": {
     "start:api": "yarn workspace nest-lab start",
