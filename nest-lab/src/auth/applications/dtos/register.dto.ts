@@ -1,5 +1,5 @@
 import { IsString, IsEmail, Length, Matches } from 'class-validator';
-import { MatchPassword } from 'src/shared/validators/match.validator';
+import { MatchPassword } from 'src/shared/decorators/validators/match.validator';
 
 export class RegisterDto {
   @IsString()

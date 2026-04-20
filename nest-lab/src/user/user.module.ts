@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { HasherModule } from 'src/shared/hasher/hasher.module';
 import { UserController } from './user.controller';
 import {
   UserSchema,
@@ -10,8 +9,8 @@ import { UserRepository } from './domain/user.repository';
 import { UserReadRepository } from './domain/user-read.repository';
 import { UserMongoRepository } from 'src/user/infrastructure/repositories/mongo/user-mongo.repository';
 import { UserMongoReadRepository } from 'src/user/infrastructure/repositories/mongo/user-mongo-read.repository';
-import { UserPgRepository} from 'src/user/infrastructure/repositories/postgres/user-pg.repository';
-import { UserPgReadRepository} from 'src/user/infrastructure/repositories/postgres/user-pg-read.repository';
+// import { UserPgRepository} from 'src/user/infrastructure/repositories/postgres/user-pg.repository';
+// import { UserPgReadRepository} from 'src/user/infrastructure/repositories/postgres/user-pg-read.repository';
 
 import { CreateUserHandler } from './application/commands/create-user/create-user.handler';
 import { DeleteUserHandler } from './application/commands/delete-user/delete-user.handler';
@@ -26,7 +25,6 @@ const QueryHandlers = [GetUserByIdHandler, GetAllUsersHandler];
     MongooseModule.forFeature([
       { name: UserSchemaClass.name, schema: UserSchema },
     ]),
-    HasherModule,
   ],
   controllers: [UserController],
   providers: [

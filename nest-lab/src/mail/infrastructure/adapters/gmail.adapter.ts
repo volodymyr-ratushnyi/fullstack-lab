@@ -2,7 +2,9 @@ import { MailDto } from 'src/mail/application/dtos/mail.dto';
 import { MailAdapter } from 'src/mail/domain/mail.adapter';
 import nodemailer, { type Transporter, type SentMessageInfo } from 'nodemailer';
 import { AppConfigService } from 'src/shared/config/config.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GmailAdapter implements MailAdapter {
   private readonly transporter: Transporter;
 

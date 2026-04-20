@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsString,
   IsEmail,
@@ -21,5 +22,9 @@ export class UserDto {
   username: string;
 
   @IsEmail()
+  @Transform(({ value }) => typeof value === 'string'
+      ? value.toLowerCase()
+      : value,
+  )
   email: string;
 }

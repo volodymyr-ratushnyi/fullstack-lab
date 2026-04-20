@@ -1,9 +1,8 @@
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { envSchema } from 'src/shared/config/config.schema';
 import { AppConfigService } from 'src/shared/config/config.service';
 
-@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({

@@ -7,6 +7,7 @@ import { CredentialsDto } from 'src/auth/applications/dtos/credentials.dto';
 import { RegisterDto } from 'src/auth/applications/dtos/register.dto';
 import { AppConfigService } from 'src/shared/config/config.service';
 import ms from 'ms';
+import { Public } from 'src/shared/decorators/metadata/public.decodator';
 
 @Controller('auth')
 export class AuthController {
@@ -15,17 +16,21 @@ export class AuthController {
     private readonly commandBus: CommandBus,
   ) {}
 
+  @Public()
   @Post()
   register(@Body() dto: RegisterDto) {
-    return this.commandBus.execute(new RegisterCommand(
-      dto.firstName,
-      dto.lastName,
-      dto.username,
-      dto.email,
-      dto.password,
-    ));
+    return this.commandBus.execute(
+      new RegisterCommand(
+        dto.firstName,
+        dto.lastName,
+        dto.username,
+        dto.email,
+        dto.password,
+      ),
+    );
   }
 
+  @Public()
   @Post()
   async login(@Body() dto: CredentialsDto, @Res() res: Response) {
     const token = await this.commandBus.execute(new LoginCommand(
