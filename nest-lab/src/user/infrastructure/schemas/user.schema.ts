@@ -10,28 +10,28 @@ export type UserDocument = UserSchemaClass & Document;
 })
 export class UserSchemaClass {
   @Prop({ required: true })
-  firstName: string;
+  firstName!: string;
 
   @Prop({ required: true })
-  lastName: string;
+  lastName!: string;
 
   @Prop({ required: true, unique: true, trim: true })
-  username: string;
+  username!: string;
 
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
-  email: string;
+  email!: string;
 
   @Prop({ required: true })
-  password: string;
+  password!: string;
 
   @Prop({ default: 'user' })
-  role: string;
+  role!: string;
 
   @Prop({ default: false })
-  isVerified: boolean;
+  isVerified!: boolean;
 
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt!: Date;
+  updatedAt!: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserSchemaClass);

@@ -1,4 +1,11 @@
+import { IsString, Length } from 'class-validator';
+
 export class CredentialsDto {
-  emailOrUsername: string;
-  password: string;
+  @IsString()
+  @Length(2, 40)
+  emailOrUsername!: string;
+
+  @IsString()
+  @Length(6, 120)
+  password!: string;
 }

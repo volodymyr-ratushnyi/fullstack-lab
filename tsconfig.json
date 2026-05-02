@@ -1,16 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "noUncheckedSideEffectImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

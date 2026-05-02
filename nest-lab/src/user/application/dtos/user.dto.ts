@@ -7,24 +7,24 @@ import {
 
 export class UserDto {
   @IsString()
-  id: string;
+  id!: string;
 
   @IsString()
   @Length(2, 40)
-  firstName: string;
+  firstName!: string;
 
   @IsString()
   @Length(2, 40)
-  lastName: string;
+  lastName!: string;
 
   @IsString()
   @Length(2, 40)
-  username: string;
+  username!: string;
 
   @IsEmail()
   @Transform(({ value }) => typeof value === 'string'
       ? value.toLowerCase()
       : value,
   )
-  email: string;
+  email!: string;
 }

@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const req = context.switchToHttp().getRequest<Request>();
-    const token = req.signedCookies.tokenl;
+    const token = req.signedCookies?.token;
     if (!token) {
       throw new UnauthorizedException('Access denied. No token provided');
     }

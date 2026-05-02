@@ -2,13 +2,13 @@ import { IsString, IsEmail, Matches } from 'class-validator';
 
 export class MailDto {
   @IsEmail()
-  to: string;
+  to!: string;
 
   @IsString()
-  subject: string;
+  subject!: string;
 
   @IsString()
-  text: string;
+  text!: string;
 
   @IsString()
   @Matches(/<[^>]*>/, { message: 'Must be HTML' })

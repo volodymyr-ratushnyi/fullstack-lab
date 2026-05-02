@@ -2,7 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
+import { AppModule } from 'src/app.module';
+import cookieParser from 'cookie-parser';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
@@ -13,6 +14,8 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    const cookiesSecret = process.env.COOKIES_SECRET;
+    app.use(cookieParser(cookiesSecret));
     await app.init();
   });
 

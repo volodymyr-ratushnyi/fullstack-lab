@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
     networks:
-      fullstack-lab
+      - fullstack-lab
 
   mongodb:
     container_name: mongodb
@@ -32,8 +32,8 @@ services:
       - fullstack-lab
 
 volumes:
-  postgres_data
-  mongodb_data
+  postgres_data:
+  mongodb_data:
 
 networks:
-  fullstack-lab
+  fullstack-lab:

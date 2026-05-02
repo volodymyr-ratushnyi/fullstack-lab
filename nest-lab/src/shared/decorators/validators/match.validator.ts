@@ -4,14 +4,14 @@ import {
   ValidationOptions,
 } from 'class-validator';
 
-export function MatchPassword(property: string, validationOptions?: ValidationOptions) {
+export function MatchPassword(property: string, options?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
       name: 'match',
       target: object.constructor,
       propertyName,
       constraints: [property],
-      options: validationOptions,
+      options,
       validator: {
         validate(value: unknown, args: ValidationArguments) {
           const dto = args.object as object;
