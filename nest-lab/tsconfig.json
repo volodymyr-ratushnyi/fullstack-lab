@@ -19,7 +19,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "typeRoots": ["./src/shared/types", "../node_modules/@types"]
+    "typeRoots": ["./src/shared/types", "../node_modules/@types", "../node_modules"]
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "dist"]

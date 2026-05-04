@@ -10,6 +10,10 @@ export class AppConfigService {
     return this.config.get('NODE_ENV', { infer: true });
   }
 
+  get gitCommit() {
+    return this.config.get('GIT_COMMIT', { infer: true });
+  }
+
   get cookiesSecret() {
     return this.config.get('COOKIES_SECRET', { infer: true });
   }

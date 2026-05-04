@@ -3,6 +3,7 @@ import ms, { StringValue } from 'ms';
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']),
+  GIT_COMMIT: z.any(),
 
   COOKIES_SECRET: z.string().min(1),
 

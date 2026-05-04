@@ -1,7 +1,5 @@
 import { MiddlewareConsumer, Module, type NestModule } from '@nestjs/common';
 import { PrismaModule } from './db/prisma/prisma.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { MongoModule } from './db/mongo/mongo.module';
@@ -11,6 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RoleGuard } from './shared/guards/role.guard';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -20,8 +19,8 @@ import { RoleGuard } from './shared/guards/role.guard';
     AuthModule,
     UserModule,
     MailModule,
+    HealthModule,
   ],
-  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,
@@ -31,7 +30,6 @@ import { RoleGuard } from './shared/guards/role.guard';
       provide: APP_GUARD,
       useClass: RoleGuard
     },
-    AppService
   ],
 })
 export class AppModule implements NestModule {
